@@ -6,7 +6,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 COPY .npmrc* ./
-RUN npm install -g pnpm
+RUN npm install -g pnpm@9
 RUN pnpm install --frozen-lockfile --ignore-scripts
 RUN pnpm rebuild prisma @prisma/engines esbuild @swc/core sharp @parcel/watcher || true
 
@@ -40,7 +40,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 RUN set -x \
     && apk add --no-cache curl \
-    && npm install -g pnpm
+    && npm install -g pnpm@9
 
 # Copy standalone output first (includes server.js and minimal package.json)
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
