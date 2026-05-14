@@ -42,12 +42,14 @@ RUN set -x \
     && apk add --no-cache curl \
     && npm install -g pnpm
 
-# Script dependencies — use npm instead of pnpm to avoid build script permission issues
-RUN npm install --ignore-scripts=false npm-run-all dotenv chalk semver \
+# Script dependencies — configure pnpm to allow Prisma build scripts
+RUN echo 'onlyBuiltDependencies:' > pnpm-workspace.yaml && \
+    echo '  - "@prisma/engines"' >> pnpm-workspace.yaml && \
+    echo '  - "prisma"' >> pnpm-workspace.yaml && \
+    pnpm add npm-run-all dotenv chalk semver \
     prisma@${PRISMA_VERSION} \
     @prisma/client@${PRISMA_VERSION} \
-    @prisma/adapter-pg@${PRISMA_VERSION} && \
-    npx prisma generate || true
+    @prisma/adapter-pg@${PRISMA_VERSION}
 
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder /app/prisma ./prisma
@@ -69,4 +71,4 @@ EXPOSE 3000
 ENV HOSTNAME=0.0.0.0
 ENV PORT=3000
 
-CMD ["npx", "npm-run-all", "check-db", "update-tracker", "start-server"]
+CMD ["pnpm", "start-docker"]
