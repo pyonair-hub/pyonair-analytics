@@ -71,4 +71,4 @@ EXPOSE 3000
 ENV HOSTNAME=0.0.0.0
 ENV PORT=3000
 
-CMD ["pnpm", "start-docker"]
+CMD ["sh", "-c", "node scripts/check-db.js && node scripts/update-tracker.js; node server.js"]
