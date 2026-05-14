@@ -42,24 +42,26 @@ RUN set -x \
     && apk add --no-cache curl \
     && npm install -g pnpm
 
-# Script dependencies — configure pnpm to allow Prisma build scripts
-RUN echo 'onlyBuiltDependencies:' > pnpm-workspace.yaml && \
-    echo '  - "@prisma/engines"' >> pnpm-workspace.yaml && \
-    echo '  - "prisma"' >> pnpm-workspace.yaml && \
-    pnpm add npm-run-all dotenv chalk semver \
-    prisma@${PRISMA_VERSION} \
-    @prisma/client@${PRISMA_VERSION} \
-    @prisma/adapter-pg@${PRISMA_VERSION}
+# Copy standalone output first (includes server.js and minimal package.json)
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Copy app assets
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 COPY --from=builder /app/scripts ./scripts
 COPY --from=builder /app/generated ./generated
 
-# Automatically leverage output traces to reduce image size
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Ensure ESM mode for scripts and install runtime script dependencies
+RUN node -e "const p=require('./package.json'); p.type='module'; require('fs').writeFileSync('package.json', JSON.stringify(p,null,2))"
+RUN echo 'onlyBuiltDependencies:' > pnpm-workspace.yaml && \
+    echo '  - "@prisma/engines"' >> pnpm-workspace.yaml && \
+    echo '  - "prisma"' >> pnpm-workspace.yaml && \
+    pnpm add dotenv chalk semver \
+    prisma@${PRISMA_VERSION} \
+    @prisma/client@${PRISMA_VERSION} \
+    @prisma/adapter-pg@${PRISMA_VERSION}
 
 # Fix ownership for runtime
 RUN chown -R nextjs:nodejs /app
