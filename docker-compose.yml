@@ -1,12 +1,15 @@
 ---
 services:
-  umami:
-    image: ghcr.io/umami-software/umami:latest
+  pyonair-analytics:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3100:3000"
     environment:
-      DATABASE_URL: postgresql://umami:umami@db:5432/umami
-      APP_SECRET: replace-me-with-a-random-string
+      DATABASE_URL: postgresql://pyonair:pyonair_analytics_2026@db:5432/pyonair_analytics
+      APP_SECRET: pyonair-analytics-secret-2026
+      DISABLE_TELEMETRY: 1
     depends_on:
       db:
         condition: service_healthy
@@ -20,11 +23,11 @@ services:
   db:
     image: postgres:15-alpine
     environment:
-      POSTGRES_DB: umami
-      POSTGRES_USER: umami
-      POSTGRES_PASSWORD: umami
+      POSTGRES_DB: pyonair_analytics
+      POSTGRES_USER: pyonair
+      POSTGRES_PASSWORD: pyonair_analytics_2026
     volumes:
-      - umami-db-data:/var/lib/postgresql/data
+      - pyonair-analytics-db:/var/lib/postgresql/data
     restart: always
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
@@ -32,4 +35,4 @@ services:
       timeout: 5s
       retries: 5
 volumes:
-  umami-db-data:
+  pyonair-analytics-db:

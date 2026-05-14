@@ -10,11 +10,11 @@ export const LAST_TEAM_CONFIG = 'umami.last-team';
 export const VERSION_CHECK = 'umami.version-check';
 export const SHARE_TOKEN_HEADER = 'x-umami-share-token';
 export const SHARE_CONTEXT_HEADER = 'x-umami-share-context';
-export const HOMEPAGE_URL = 'https://umami.is';
-export const DOCS_URL = 'https://umami.is/docs';
-export const REPO_URL = 'https://github.com/umami-software/umami';
-export const UPDATES_URL = 'https://api.umami.is/v1/updates';
-export const TELEMETRY_PIXEL = 'https://i.umami.is/a.png';
+export const HOMEPAGE_URL = 'https://pyonair.com';
+export const DOCS_URL = 'https://pyonair.com/docs';
+export const REPO_URL = 'https://github.com/pyonair-hub/pyonair-analytics';
+export const UPDATES_URL = '';
+export const TELEMETRY_PIXEL = '';
 export const FAVICON_URL = 'https://icons.duckduckgo.com/ip3/{{domain}}.ico';
 export const LINKS_URL = `${globalThis?.location?.origin}/q`;
 export const PIXELS_URL = `${globalThis?.location?.origin}/p`;
@@ -218,32 +218,32 @@ export const ROLE_PERMISSIONS = {
 
 export const THEME_COLORS = {
   light: {
-    primary: '#2680eb',
-    text: '#838383',
-    line: '#d9d9d9',
-    fill: '#f9f9f9',
+    primary: '#E63946',
+    text: '#475569',
+    line: '#E2E8F0',
+    fill: '#F1F5F9',
   },
   dark: {
-    primary: '#2680eb',
-    text: '#7b7b7b',
-    line: '#3a3a3a',
-    fill: '#191919',
+    primary: '#E63946',
+    text: '#94A3B8',
+    line: '#334155',
+    fill: '#0F172A',
   },
 } as const;
 
 export const CHART_COLORS = [
-  '#2680eb',
-  '#9256d9',
-  '#44b556',
-  '#e68619',
-  '#e34850',
-  '#f7bd12',
-  '#01bad7',
-  '#6734bc',
-  '#89c541',
-  '#ffc301',
-  '#ec1562',
-  '#ffec16',
+  '#E63946',
+  '#0F172A',
+  '#94A3B8',
+  '#FF6B6B',
+  '#475569',
+  '#F1F5F9',
+  '#1E293B',
+  '#CBD5E1',
+  '#DC2626',
+  '#334155',
+  '#F87171',
+  '#64748B',
 ];
 
 export const DOMAIN_REGEX =

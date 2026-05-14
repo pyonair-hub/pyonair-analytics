@@ -1,7 +1,10 @@
 :root {
   --font-family: var(--font-inter), sans-serif;
-  --primary: oklch(62.3% 0.214 259.815);
+  --primary: oklch(55.8% 0.197 22.18);
   --primary-foreground: oklch(98.5% 0 0);
+  --pyonair-red: #E63946;
+  --pyonair-navy: #0F172A;
+  --pyonair-coral: #FF6B6B;
 }
 
 html,
