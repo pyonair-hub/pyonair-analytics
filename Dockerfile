@@ -58,7 +58,7 @@ RUN node -e "const p=require('./package.json'); p.type='module'; require('fs').w
 RUN echo 'onlyBuiltDependencies:' > pnpm-workspace.yaml && \
     echo '  - "@prisma/engines"' >> pnpm-workspace.yaml && \
     echo '  - "prisma"' >> pnpm-workspace.yaml && \
-    pnpm add dotenv chalk semver \
+    pnpm add dotenv chalk semver pg \
     prisma@${PRISMA_VERSION} \
     @prisma/client@${PRISMA_VERSION} \
     @prisma/adapter-pg@${PRISMA_VERSION}
