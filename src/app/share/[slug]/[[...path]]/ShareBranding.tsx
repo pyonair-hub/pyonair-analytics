@@ -8,8 +8,8 @@ const TEXT_SIZE = { sm: 'sm', md: 'base', lg: 'lg' } as const;
 
 export function ShareBranding({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   const share = useShare();
-  const logoDomain = share?.whiteLabel?.domainName || 'https://umami.is';
-  const logoName = share?.whiteLabel?.displayName || 'umami';
+  const logoDomain = share?.whiteLabel?.domainName || 'https://pyonair.com';
+  const logoName = share?.whiteLabel?.displayName || 'Pyonair Analytics';
   const logoImage = share?.whiteLabel?.logoUrl;
   const height = LOGO_SIZE[size];
 
